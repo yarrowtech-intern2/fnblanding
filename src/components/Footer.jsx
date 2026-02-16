@@ -155,7 +155,7 @@ const Footer = () => {
         {/* Bottom */}
         <div className="flex flex-col gap-4 md:flex-row md:justify-between md:items-center pb-8 text-center md:text-left">
           <p className="text-gray-500 text-sm">
-            © {year} F&B Platform. All rights reserved.
+            {/* © {year} F&B Platform. All rights reserved. */}
           </p>
 
           {/* Social Icons */}
