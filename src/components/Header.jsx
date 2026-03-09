@@ -10,7 +10,6 @@ const Header = () => {
   const observerRef = useRef(null);
   const isManualScroll = useRef(false);
 
-  /* ── NAV ITEMS ── */
   const navItems = [
     { name: "Home",     path: "/" },
     { name: "Services", path: "/services" },
@@ -33,16 +32,6 @@ const Header = () => {
     const onScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  useEffect(() => {
-    const unlock = () => (isManualScroll.current = false);
-    window.addEventListener("wheel", unlock, { passive: true });
-    window.addEventListener("touchmove", unlock, { passive: true });
-    return () => {
-      window.removeEventListener("wheel", unlock);
-      window.removeEventListener("touchmove", unlock);
-    };
   }, []);
 
   useEffect(() => {
@@ -83,7 +72,7 @@ const Header = () => {
       const el = document.getElementById(pathToId[path]);
       if (!el) return;
       isManualScroll.current = true;
-      const offset = el.getBoundingClientRect().top + window.pageYOffset - 96;
+      const offset = el.getBoundingClientRect().top + window.pageYOffset - 80;
       window.scrollTo({ top: offset, behavior: "smooth" });
       setTimeout(() => {
         isManualScroll.current = false;
@@ -96,133 +85,184 @@ const Header = () => {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=DM+Sans:wght@300;400;500;600&display=swap');
-        .font-playfair { font-family: 'Playfair Display', serif; }
-        .font-dm       { font-family: 'DM Sans', sans-serif; }
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
+        * { box-sizing: border-box; }
+        .hdr { font-family: 'Outfit', sans-serif; }
 
-        .nav-link-underline {
+        .hdr-nav-link {
           position: relative;
+          font-size: 14px;
+          font-weight: 500;
+          text-decoration: none;
+          padding: 4px 14px;
+          transition: color 0.25s;
         }
-        .nav-link-underline::after {
-          content: '';
+        .hdr-nav-link::after {
+          content:'';
           position: absolute;
-          bottom: -2px;
-          left: 50%;
-          transform: translateX(-50%);
-          width: 0;
-          height: 2px;
+          bottom: 0; left: 14px;
+          width: 0; height: 2px;
           background: #16a34a;
-          border-radius: 999px;
-          transition: width 0.3s ease;
+          border-radius: 2px;
+          transition: width 0.25s ease;
         }
-        .nav-link-underline:hover::after {
-          width: 60%;
+        .hdr-nav-link:hover::after,
+        .hdr-nav-link.hdr-active::after { width: calc(100% - 28px); }
+
+        /* Hamburger bars */
+        .hdr-bar {
+          display: block;
+          width: 22px; height: 2px;
+          background: #1a1a1a;
+          border-radius: 99px;
+          transition: all 0.3s ease;
         }
-        .nav-link-underline.active-link::after {
-          width: 60%;
-          background: #16a34a;
+        .hdr-bar-1-open { transform: rotate(45deg) translate(3px, 3px); }
+        .hdr-bar-2-open { opacity: 0; width: 0; }
+        .hdr-bar-3-open { transform: rotate(-45deg) translate(3px, -3px); }
+
+        /* Mobile menu animation */
+        .hdr-mobile-open {
+          animation: hdrDown 0.28s ease both;
+        }
+        @keyframes hdrDown {
+          from { opacity: 0; transform: translateY(-10px); }
+          to   { opacity: 1; transform: translateY(0); }
         }
       `}</style>
 
       <header
-        className={`font-dm fixed top-0 w-full z-50 transition-all duration-400
-          ${isScrolled
-            ? "bg-white/97 backdrop-blur-md shadow-[0_1px_24px_rgba(0,0,0,0.08)] border-b border-gray-100"
-            : "bg-white/80 backdrop-blur-sm border-b border-transparent"
-          }`}
+        className="hdr"
+        style={{
+          position: 'fixed', top: 0, left: 0, width: '100%', zIndex: 50,
+          transition: 'background 0.3s, box-shadow 0.3s',
+          background: isScrolled ? '#fff' : 'transparent',
+          boxShadow: isScrolled ? '0 1px 20px rgba(0,0,0,0.08)' : 'none',
+        }}
       >
-        <div className="max-w-7xl mx-auto h-16 px-4 sm:px-6 flex items-center justify-between">
+        {/* ── MAIN BAR ── */}
+        <div style={{
+          maxWidth: 1400, margin: '0 auto',
+          padding: '0 20px',
+          height: 68,
+          display: 'flex', alignItems: 'center',
+          justifyContent: 'space-between',
+          position: 'relative',
+        }}>
 
-          {/* ── LOGO ── */}
-          <Link
-            to="/"
-            onClick={(e) => handleNavClick(e, "/")}
-            className="flex items-center gap-2.5 group"
-          >
-            <div className="flex flex-col leading-none">
-              <span className="font-playfair font-bold text-base text-gray-900
-                group-hover:text-green-700 transition-colors duration-300">
+          {/* LOGO */}
+          <Link to="/" onClick={(e) => handleNavClick(e, "/")} style={{ textDecoration: 'none' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1.15 }}>
+              <span style={{
+                fontFamily: 'Outfit,sans-serif', fontWeight: 900,
+                fontSize: 'clamp(16px, 3.5vw, 22px)',
+                color: '#1a1a1a', letterSpacing: '-0.3px',
+              }}>
                 Food &amp; Beverage
               </span>
-              <span className="text-[10px] font-medium tracking-[0.15em] uppercase text-gray-400">
+              <span style={{
+                fontFamily: 'Outfit,sans-serif', fontWeight: 700,
+                fontSize: '9px', letterSpacing: '0.18em',
+                textTransform: 'uppercase', color: '#FFD66B',
+              }}>
                 ERP Solutions
               </span>
             </div>
           </Link>
 
-          {/* ── DESKTOP NAV ── */}
-          <nav className="hidden md:flex items-center gap-1">
+          {/* DESKTOP NAV — centered glass pill */}
+          <nav style={{
+            position: 'absolute', left: '50%', transform: 'translateX(-50%)',
+            display: 'none',   /* overridden by media query below */
+            alignItems: 'center', gap: 0,
+            background: isScrolled ? 'transparent' : 'rgba(255,255,255,0.78)',
+            backdropFilter: isScrolled ? 'none' : 'blur(12px)',
+            WebkitBackdropFilter: isScrolled ? 'none' : 'blur(12px)',
+            borderRadius: 99,
+            padding: isScrolled ? '0 4px' : '6px 8px',
+            boxShadow: isScrolled ? 'none' : '0 2px 16px rgba(0,0,0,0.08)',
+            border: isScrolled ? 'none' : '1px solid rgba(255,255,255,0.5)',
+            transition: 'all 0.3s ease',
+          }}
+            className="hdr-desktop-nav"
+          >
             {navItems.map((item) => (
               <Link
                 key={item.name}
                 to={item.path}
                 onClick={(e) => handleNavClick(e, item.path)}
-                className={`nav-link-underline px-4 py-2 text-sm font-medium
-                  transition-colors duration-300 rounded-md
-                  ${isActive(item.path)
-                    ? "active-link text-green-700"
-                    : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
-                  }`}
+                className={`hdr-nav-link ${isActive(item.path) ? "hdr-active" : ""}`}
+                style={{
+                  color: isActive(item.path) ? '#111' : '#555',
+                  fontWeight: isActive(item.path) ? 700 : 500,
+                }}
               >
                 {item.name}
               </Link>
             ))}
-
           </nav>
 
-          {/* ── MOBILE HAMBURGER ── */}
+          {/* MOBILE HAMBURGER */}
           <button
-            onClick={() => setIsMenuOpen((p) => !p)}
+            onClick={() => setIsMenuOpen(p => !p)}
+            className="hdr-hamburger"
             aria-label="Toggle menu"
-            className="md:hidden w-9 h-9 rounded-lg flex items-center justify-center
-              text-gray-600 hover:text-gray-900 hover:bg-gray-100
-              active:bg-gray-200 transition-all duration-200"
+            style={{
+              display: 'none',  /* shown via media query */
+              flexDirection: 'column', gap: 5,
+              background: 'none', border: 'none', cursor: 'pointer', padding: 4,
+            }}
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              {isMenuOpen ? (
-                <path strokeLinecap="round" strokeLinejoin="round"
-                  strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              ) : (
-                <path strokeLinecap="round" strokeLinejoin="round"
-                  strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              )}
-            </svg>
+            <span className={`hdr-bar ${isMenuOpen ? 'hdr-bar-1-open' : ''}`} />
+            <span className={`hdr-bar ${isMenuOpen ? 'hdr-bar-2-open' : ''}`} />
+            <span className={`hdr-bar ${isMenuOpen ? 'hdr-bar-3-open' : ''}`} />
           </button>
         </div>
 
-        {/* ── MOBILE MENU ── */}
-        <div
-          className={`md:hidden overflow-hidden transition-all duration-300
-            ${isMenuOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0"}`}
-        >
-          <nav className="bg-white border-t border-gray-100
-            px-4 py-4 shadow-[0_8px_24px_rgba(0,0,0,0.06)]"
+        {/* MOBILE MENU DROPDOWN */}
+        {isMenuOpen && (
+          <nav
+            className="hdr-mobile-open hdr-mobile-nav"
+            style={{
+              background: '#fff',
+              borderTop: '1px solid #f0f0f0',
+              boxShadow: '0 8px 32px rgba(0,0,0,0.1)',
+            }}
           >
-            <ul className="flex flex-col gap-1">
-              {navItems.map((item) => (
-                <li key={item.name}>
-                  <Link
-                    to={item.path}
-                    onClick={(e) => handleNavClick(e, item.path)}
-                    className={`flex items-center px-4 py-3 rounded-xl text-sm font-medium
-                      transition-all duration-250
-                      ${isActive(item.path)
-                        ? "bg-green-50 text-green-700 border border-green-200"
-                        : "text-gray-700 hover:bg-gray-50 hover:text-gray-900"
-                      }`}
-                  >
-                    {/* Active indicator dot */}
-                    {isActive(item.path) && (
-                      <span className="w-1.5 h-1.5 rounded-full bg-green-500 mr-3 flex-shrink-0" />
-                    )}
-                    {item.name}
-                  </Link>
-                </li>
-              ))}
-
-            </ul>
+            {navItems.map((item) => (
+              <Link
+                key={item.name}
+                to={item.path}
+                onClick={(e) => handleNavClick(e, item.path)}
+                style={{
+                  display: 'block',
+                  padding: '14px 24px',
+                  fontFamily: 'Outfit,sans-serif',
+                  fontSize: 16, fontWeight: isActive(item.path) ? 700 : 500,
+                  color: isActive(item.path) ? '#16a34a' : '#444',
+                  borderBottom: '1px solid #f5f5f5',
+                  textDecoration: 'none',
+                  transition: 'color 0.2s',
+                }}
+              >
+                {item.name}
+              </Link>
+            ))}
           </nav>
-        </div>
+        )}
+
+        {/* Responsive CSS injected */}
+        <style>{`
+          @media (min-width: 768px) {
+            .hdr-desktop-nav { display: flex !important; }
+            .hdr-hamburger   { display: none !important; }
+          }
+          @media (max-width: 767px) {
+            .hdr-desktop-nav { display: none !important; }
+            .hdr-hamburger   { display: flex !important; }
+            .hdr-mobile-nav  { display: block; }
+          }
+        `}</style>
       </header>
     </>
   );

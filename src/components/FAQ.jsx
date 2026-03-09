@@ -42,22 +42,8 @@ const faqs = [
     answer:
       "Yes. It integrates with Kitchen Display Systems (KDS), supports intelligent order routing, preparation time tracking, quality checks, and real-time kitchen workflow optimization.",
   },
-  {
-    question: "Can the platform scale as the business grows?",
-    answer:
-      "Yes. The platform is built on a microservices and cloud-native architecture with auto-scaling, high availability, and support for thousands of concurrent users and locations.",
-  },
-  {
-    question: "Does the system provide analytics and reporting?",
-    answer:
-      "It includes executive dashboards, inventory analytics, staff performance metrics, financial reports, predictive analytics, and export options such as PDF, Excel, and CSV.",
-  },
-  {
-    question: "Can it integrate with POS systems and third-party services?",
-    answer:
-      "Yes. The system integrates with POS hardware, payment gateways, accounting software, delivery platforms, marketing tools, IoT devices, and external APIs using REST and GraphQL.",
-  },
 ];
+
 
 /* ── Chevron Icon ── */
 const ChevronIcon = ({ open }) => (
