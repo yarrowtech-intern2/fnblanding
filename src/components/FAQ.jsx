@@ -6,7 +6,7 @@ const useInView = (threshold = 0.15) => {
   const [inView, setInView] = useState(false);
   useEffect(() => {
     const obs = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setInView(true); },
+      ([entry]) => { setInView(entry.isIntersecting); },
       { threshold }
     );
     if (ref.current) obs.observe(ref.current);
@@ -72,7 +72,7 @@ const FAQItem = ({ faq, index, isOpen, onToggle }) => {
       ref={ref}
       style={{
         opacity: inView ? 1 : 0,
-        transform: inView ? "translateY(0)" : "translateY(24px)",
+        transform: inView ? "translateX(0)" : (index % 2 === 0 ? "translateX(-36px)" : "translateX(36px)"),
         transition: `opacity 0.55s ease ${index * 60}ms, transform 0.55s ease ${index * 60}ms`,
       }}
       className={`group bg-white rounded-2xl overflow-hidden

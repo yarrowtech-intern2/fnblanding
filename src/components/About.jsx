@@ -8,7 +8,7 @@ const useInView = (threshold = 0.15) => {
   const [inView, setInView] = useState(false);
   useEffect(() => {
     const obs = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setInView(true); },
+      ([entry]) => { setInView(entry.isIntersecting); },
       { threshold }
     );
     if (ref.current) obs.observe(ref.current);
@@ -62,7 +62,7 @@ const FeatureCard = ({ item, index }) => {
         transition-all duration-500 overflow-hidden"
       style={{
         opacity: inView ? 1 : 0,
-        transform: inView ? "translateY(0)" : "translateY(28px)",
+        transform: inView ? "translateX(0)" : (index % 2 === 0 ? "translateX(-32px)" : "translateX(32px)"),
         transition: `opacity 0.6s ease ${index * 100}ms, transform 0.6s ease ${index * 100}ms, box-shadow 0.4s, border-color 0.4s`,
       }}
     >

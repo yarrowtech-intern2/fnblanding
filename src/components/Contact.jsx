@@ -1,9 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { FaEnvelope, FaPhoneAlt, FaMapMarkerAlt } from "react-icons/fa";
 
 // ✅ AOS
 import AOS from "aos";
 import "aos/dist/aos.css";
+
+/* ── Intersection Observer hook ── */
+const useInView = (threshold = 0.15) => {
+  const ref = useRef(null);
+  const [inView, setInView] = useState(false);
+  useEffect(() => {
+    const obs = new IntersectionObserver(
+      ([entry]) => { setInView(entry.isIntersecting); },
+      { threshold }
+    );
+    if (ref.current) obs.observe(ref.current);
+    return () => obs.disconnect();
+  }, [threshold]);
+  return [ref, inView];
+};
 
 /* ── Input Field ── */
 const InputField = ({
@@ -168,6 +183,7 @@ const Toast = ({ show, type = "success", message, onClose }) => {
    Main Contact Component
 ───────────────────────────────────────── */
 const Contact = () => {
+  const [headingRef, headingInView] = useInView(0.2);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -190,7 +206,7 @@ const Contact = () => {
   useEffect(() => {
     AOS.init({
       duration: 900,
-      once: true,
+      once: false,
       easing: "ease-in-out",
     });
   }, []);
@@ -306,7 +322,15 @@ const handleSubmit = async (e) => {
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
           {/* Heading */}
-          <div data-aos="fade-up" className="text-center mb-16">
+          <div
+            ref={headingRef}
+            className="text-center mb-16"
+            style={{
+              opacity: headingInView ? 1 : 0,
+              transform: headingInView ? "translateY(0)" : "translateY(24px)",
+              transition: "opacity 0.7s ease, transform 0.7s ease",
+            }}
+          >
             <div className="inline-flex items-center gap-3 mb-4">
               <span className="block w-8 h-px bg-green-400" />
               <span className="text-green-600 text-xs font-semibold tracking-[0.2em] uppercase">
@@ -334,6 +358,9 @@ const handleSubmit = async (e) => {
                     strokeWidth="2.5"
                     strokeLinecap="round"
                     fill="none"
+                    strokeDasharray="200"
+                    strokeDashoffset={headingInView ? "0" : "200"}
+                    style={{ transition: "stroke-dashoffset 1.1s ease 0.5s" }}
                   />
                 </svg>
               </span>{" "}

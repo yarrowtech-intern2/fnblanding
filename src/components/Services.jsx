@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   FaUsers,
   FaUtensils,
@@ -14,6 +14,21 @@ import {
 // ✅ AOS
 import AOS from "aos";
 import "aos/dist/aos.css";
+
+/* ── Intersection Observer hook ── */
+const useInView = (threshold = 0.15) => {
+  const ref = useRef(null);
+  const [inView, setInView] = useState(false);
+  useEffect(() => {
+    const obs = new IntersectionObserver(
+      ([entry]) => { setInView(entry.isIntersecting); },
+      { threshold }
+    );
+    if (ref.current) obs.observe(ref.current);
+    return () => obs.disconnect();
+  }, [threshold]);
+  return [ref, inView];
+};
 
 const services = [
   {
@@ -64,12 +79,6 @@ const services = [
     description:
       "Interactive dashboards with actionable insights and growth metrics.",
   },
-  {
-    icon: <FaPlug />,
-    title: "System Integration & APIs",
-    description:
-      "Secure APIs and integrations with POS, ERP, and third-party platforms.",
-  },
 ];
 
 /* ─────────────────────────────────────────
@@ -78,7 +87,7 @@ const services = [
 const ServiceCard = ({ service, index }) => {
   return (
     <div
-      data-aos="fade-up"
+      data-aos={index % 2 === 0 ? "fade-right" : "fade-left"}
       data-aos-delay={index * 80}
       className="group relative bg-white rounded-2xl p-7 sm:p-8
         border border-gray-100
@@ -139,11 +148,13 @@ const ServiceCard = ({ service, index }) => {
    Services Section
 ───────────────────────────────────────── */
 const Services = () => {
+  const [headingRef, headingInView] = useInView(0.2);
+
   // ✅ AOS Init
   useEffect(() => {
     AOS.init({
       duration: 900,
-      once: true,
+      once: false,
       easing: "ease-in-out",
     });
   }, []);
@@ -173,7 +184,15 @@ const Services = () => {
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Section Heading */}
-          <div data-aos="fade-up" className="text-center mb-16 sm:mb-20">
+          <div
+            ref={headingRef}
+            className="text-center mb-16 sm:mb-20"
+            style={{
+              opacity: headingInView ? 1 : 0,
+              transform: headingInView ? "translateY(0)" : "translateY(24px)",
+              transition: "opacity 0.7s ease, transform 0.7s ease",
+            }}
+          >
             {/* Eyebrow */}
             <div className="inline-flex items-center gap-3 mb-4">
               <span className="block w-8 h-px bg-green-400" />
@@ -205,7 +224,8 @@ const Services = () => {
                     strokeLinecap="round"
                     fill="none"
                     strokeDasharray="220"
-                    strokeDashoffset="0"
+                    strokeDashoffset={headingInView ? "0" : "220"}
+                    style={{ transition: "stroke-dashoffset 1.1s ease 0.5s" }}
                   />
                 </svg>
               </span>
