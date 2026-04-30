@@ -73,7 +73,7 @@ const FAQItem = ({ faq, index, isOpen, onToggle }) => {
       style={{
         opacity: inView ? 1 : 0,
         transform: inView ? "translateX(0)" : (index % 2 === 0 ? "translateX(-36px)" : "translateX(36px)"),
-        transition: `opacity 0.55s ease ${index * 60}ms, transform 0.55s ease ${index * 60}ms`,
+        transition: `opacity 0.8s cubic-bezier(0.4,0,0.2,1) ${index * 60}ms, transform 0.8s cubic-bezier(0.4,0,0.2,1) ${index * 60}ms`,
       }}
       className={`group bg-white rounded-2xl overflow-hidden
         border transition-all duration-400
@@ -86,7 +86,7 @@ const FAQItem = ({ faq, index, isOpen, onToggle }) => {
       <button
         onClick={onToggle}
         className="w-full flex items-center justify-between gap-4
-          px-6 sm:px-7 py-5 text-left focus:outline-none"
+          px-6 sm:px-7 py-5 text-left focus:outline-none cursor-pointer"
       >
         {/* Index + Question */}
         <div className="flex items-center gap-4">

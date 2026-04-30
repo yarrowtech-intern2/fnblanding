@@ -29,7 +29,10 @@ const Header = () => {
   useEffect(() => { setIsMenuOpen(false); }, [location.pathname]);
 
   useEffect(() => {
-    const onScroll = () => setIsScrolled(window.scrollY > 20);
+    const onScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+      setIsMenuOpen(false);
+    };
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);

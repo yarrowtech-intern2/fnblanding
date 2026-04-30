@@ -308,7 +308,7 @@ const handleSubmit = async (e) => {
       <section
         id="contact"
         className="font-dm relative bg-gradient-to-b from-white via-green-50/60 to-white
-          pt-24 pb-24 scroll-mt-24 overflow-hidden"
+          pt-14 pb-14 scroll-mt-20 overflow-hidden"
       >
         {/* Decorative blobs */}
         <div
@@ -573,7 +573,7 @@ const handleSubmit = async (e) => {
                       ${
                         isSubmitting
                           ? "bg-green-400 cursor-not-allowed"
-                          : "bg-gradient-to-r from-green-700 via-green-600 to-green-500 hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(22,101,52,0.45)] active:scale-95"
+                          : "bg-gradient-to-r from-green-700 via-green-600 to-green-500 hover:-translate-y-0.5 hover:shadow-[0_8px_28px_rgba(22,101,52,0.45)] active:scale-95 rounded-full cursor-pointer"
                       }`}
                   >
                     {isSubmitting ? (

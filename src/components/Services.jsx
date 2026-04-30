@@ -89,57 +89,62 @@ const ServiceCard = ({ service, index }) => {
     <div
       data-aos={index % 2 === 0 ? "fade-right" : "fade-left"}
       data-aos-delay={index * 80}
-      className="group relative bg-white rounded-2xl p-7 sm:p-8
+      className="group relative"
+    >
+      <div className="relative bg-white rounded-2xl p-7 sm:p-8
         border border-gray-100
         shadow-[0_2px_16px_rgba(0,0,0,0.06)]
-        hover:shadow-[0_16px_48px_rgba(22,101,52,0.14)]
-        hover:-translate-y-2 hover:border-green-300
-        transition-all duration-500 overflow-hidden cursor-default"
-    >
-      {/* Subtle background blob on hover */}
-      <div
-        className="absolute -top-10 -right-10 w-36 h-36 rounded-full
-        bg-green-50 opacity-0 group-hover:opacity-100
-        transition-opacity duration-500 pointer-events-none"
-      />
-
-      {/* Icon */}
-      <div
-        className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-xl
-        bg-gradient-to-br from-green-500 to-green-700
-        flex items-center justify-center
-        text-white text-2xl sm:text-3xl
-        shadow-[0_4px_14px_rgba(22,101,52,0.35)]
-        group-hover:scale-110 group-hover:rotate-3
-        transition-transform duration-400"
+        group-hover:shadow-[0_16px_48px_rgba(22,101,52,0.14)]
+        group-hover:-translate-y-2 group-hover:border-green-200
+        transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]
+        overflow-hidden cursor-pointer
+        [backface-visibility:hidden] [will-change:transform]"
       >
-        {service.icon}
+        {/* Subtle background blob on hover */}
+        <div
+          className="absolute -top-10 -right-10 w-36 h-36 rounded-full
+          bg-green-50 opacity-0 group-hover:opacity-100
+          transition-opacity duration-500 pointer-events-none"
+        />
+
+        {/* Icon */}
+        <div
+          className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-xl
+          bg-gradient-to-br from-green-500 to-green-700
+          flex items-center justify-center
+          text-white text-2xl sm:text-3xl
+          shadow-[0_4px_14px_rgba(22,101,52,0.35)]
+          group-hover:scale-110 group-hover:rotate-3
+          transition-transform duration-400"
+        >
+          {service.icon}
+        </div>
+
+        {/* Title */}
+        <h3
+          className="relative mt-5 text-lg sm:text-xl font-bold
+          text-gray-800 group-hover:text-green-700
+          transition-colors duration-300 leading-snug"
+        >
+          {service.title}
+        </h3>
+
+        {/* Description */}
+        <p
+          className="relative mt-3 text-sm sm:text-base
+          text-gray-500 leading-relaxed
+          group-hover:text-gray-600 transition-colors duration-300"
+        >
+          {service.description}
+        </p>
+
+        {/* Bottom accent line */}
+        <span
+          className="absolute bottom-0 left-0 h-[3px] w-0
+          bg-gradient-to-r from-green-400 to-green-600
+          group-hover:w-full transition-all duration-500 rounded-b-2xl"
+        />
       </div>
-
-      {/* Title */}
-      <h3
-        className="relative mt-5 text-lg sm:text-xl font-bold
-        text-gray-800 group-hover:text-green-700
-        transition-colors duration-300 leading-snug"
-      >
-        {service.title}
-      </h3>
-
-      {/* Description */}
-      <p
-        className="relative mt-3 text-sm sm:text-base
-        text-gray-500 leading-relaxed
-        group-hover:text-gray-600 transition-colors duration-300"
-      >
-        {service.description}
-      </p>
-
-      {/* Bottom accent line */}
-      <span
-        className="absolute bottom-0 left-0 h-[3px] w-0
-        bg-gradient-to-r from-green-400 to-green-600
-        group-hover:w-full transition-all duration-500 rounded-b-2xl"
-      />
     </div>
   );
 };
@@ -148,7 +153,7 @@ const ServiceCard = ({ service, index }) => {
    Services Section
 ───────────────────────────────────────── */
 const Services = () => {
-  const [headingRef, headingInView] = useInView(0.2);
+  const [headingRef, inView] = useInView(0.2);
 
   // ✅ AOS Init
   useEffect(() => {
@@ -169,7 +174,7 @@ const Services = () => {
 
       <section
         id="services"
-        className="font-dm relative py-20 sm:py-24 lg:py-32 overflow-hidden
+        className="font-dm relative py-14 sm:py-24 lg:py-32 overflow-hidden
           bg-gradient-to-b from-white via-green-50/60 to-white"
       >
         {/* Decorative background shapes */}
@@ -188,9 +193,9 @@ const Services = () => {
             ref={headingRef}
             className="text-center mb-16 sm:mb-20"
             style={{
-              opacity: headingInView ? 1 : 0,
-              transform: headingInView ? "translateY(0)" : "translateY(24px)",
-              transition: "opacity 0.7s ease, transform 0.7s ease",
+              opacity: inView ? 1 : 0,
+              transform: inView ? "translateY(0)" : "translateY(24px)",
+              transition: "opacity 0.8s cubic-bezier(0.4,0,0.2,1), transform 0.8s cubic-bezier(0.4,0,0.2,1)",
             }}
           >
             {/* Eyebrow */}
@@ -224,7 +229,7 @@ const Services = () => {
                     strokeLinecap="round"
                     fill="none"
                     strokeDasharray="220"
-                    strokeDashoffset={headingInView ? "0" : "220"}
+                    strokeDashoffset={inView ? "0" : "220"}
                     style={{ transition: "stroke-dashoffset 1.1s ease 0.5s" }}
                   />
                 </svg>

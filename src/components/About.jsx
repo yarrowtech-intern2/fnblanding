@@ -54,47 +54,52 @@ const FeatureCard = ({ item, index }) => {
   return (
     <div
       ref={ref}
-      className="group relative bg-white rounded-2xl p-7 sm:p-8
-        border border-gray-100
-        shadow-[0_2px_16px_rgba(0,0,0,0.06)]
-        hover:shadow-[0_16px_48px_rgba(22,101,52,0.13)]
-        hover:-translate-y-2 hover:border-green-200
-        transition-all duration-500 overflow-hidden"
+      className="group relative"
       style={{
         opacity: inView ? 1 : 0,
         transform: inView ? "translateX(0)" : (index % 2 === 0 ? "translateX(-32px)" : "translateX(32px)"),
-        transition: `opacity 0.6s ease ${index * 100}ms, transform 0.6s ease ${index * 100}ms, box-shadow 0.4s, border-color 0.4s`,
+        transition: `opacity 0.6s ease ${index * 100}ms, transform 0.6s ease ${index * 100}ms`,
       }}
     >
-      {/* Background blob */}
-      <div className="absolute -top-8 -right-8 w-28 h-28 rounded-full
-        bg-green-50 opacity-0 group-hover:opacity-100
-        transition-opacity duration-500 pointer-events-none" />
-
-      {/* Icon */}
-      <div className="relative w-12 h-12 rounded-xl
-        bg-gradient-to-br from-green-500 to-green-700
-        flex items-center justify-center text-white
-        shadow-[0_4px_12px_rgba(22,101,52,0.3)]
-        group-hover:scale-110 group-hover:rotate-3
-        transition-transform duration-300 mb-5"
+      <div className="relative bg-white rounded-2xl p-7 sm:p-8
+        border border-gray-100
+        shadow-[0_2px_16px_rgba(0,0,0,0.06)]
+        group-hover:shadow-[0_16px_48px_rgba(22,101,52,0.13)]
+        group-hover:-translate-y-2 group-hover:border-green-200
+        transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]
+        overflow-hidden cursor-pointer
+        [backface-visibility:hidden] [will-change:transform]"
       >
-        {item.icon}
+        {/* Background blob */}
+        <div className="absolute -top-8 -right-8 w-28 h-28 rounded-full
+          bg-green-50 opacity-0 group-hover:opacity-100
+          transition-opacity duration-500 pointer-events-none" />
+
+        {/* Icon */}
+        <div className="relative w-12 h-12 rounded-xl
+          bg-gradient-to-br from-green-500 to-green-700
+          flex items-center justify-center text-white
+          shadow-[0_4px_12px_rgba(22,101,52,0.3)]
+          group-hover:scale-110 group-hover:rotate-3
+          transition-transform duration-300 mb-5"
+        >
+          {item.icon}
+        </div>
+
+        <h4 className="relative text-lg font-bold text-gray-800
+          group-hover:text-green-700 transition-colors duration-300 mb-2">
+          {item.title}
+        </h4>
+        <p className="relative text-sm sm:text-base text-gray-500
+          group-hover:text-gray-600 leading-relaxed transition-colors duration-300">
+          {item.desc}
+        </p>
+
+        {/* Bottom accent line */}
+        <span className="absolute bottom-0 left-0 h-[3px] w-0
+          bg-gradient-to-r from-green-400 to-green-600
+          group-hover:w-full transition-all duration-500 rounded-b-2xl" />
       </div>
-
-      <h4 className="relative text-lg font-bold text-gray-800
-        group-hover:text-green-700 transition-colors duration-300 mb-2">
-        {item.title}
-      </h4>
-      <p className="relative text-sm sm:text-base text-gray-500
-        group-hover:text-gray-600 leading-relaxed transition-colors duration-300">
-        {item.desc}
-      </p>
-
-      {/* Bottom accent line */}
-      <span className="absolute bottom-0 left-0 h-[3px] w-0
-        bg-gradient-to-r from-green-400 to-green-600
-        group-hover:w-full transition-all duration-500 rounded-b-2xl" />
     </div>
   );
 };
@@ -149,7 +154,7 @@ const About = () => {
       <section
         id="about"
         className="font-dm relative bg-gradient-to-b from-gray-50 to-white
-          text-gray-800 pt-24 scroll-mt-24 overflow-hidden"
+          text-gray-800 py-14 sm:pt-24 scroll-mt-24 overflow-hidden"
       >
         {/* ── Decorative blobs ── */}
         <div className="absolute top-0 right-0 w-80 h-80 rounded-full
@@ -238,13 +243,13 @@ const About = () => {
               <button
                 onClick={handleContactClick}
                 className="inline-flex items-center gap-2
-                  px-9 py-3.5 rounded
+                  px-9 py-3.5 rounded-full
                   bg-gradient-to-r from-green-700 via-green-600 to-green-500
                   text-white text-sm font-medium tracking-widest uppercase
                   shadow-[0_4px_20px_rgba(22,101,52,0.4)]
                   hover:shadow-[0_10px_36px_rgba(22,101,52,0.55)]
                   hover:-translate-y-1 hover:scale-[1.03]
-                  active:scale-95 transition-all duration-300"
+                  active:scale-95 transition-all duration-300 cursor-pointer"
               >
                 <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none"
                   stroke="currentColor" strokeWidth={2}>

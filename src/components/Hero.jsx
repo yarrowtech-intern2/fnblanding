@@ -1,11 +1,26 @@
 import React, { useRef, useState, useEffect } from "react";
+
+/* ── Intersection Observer hook ── */
+const useInView = (threshold = 0.1) => {
+  const ref = useRef(null);
+  const [inView, setInView] = useState(false);
+  useEffect(() => {
+    const obs = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setInView(true); },
+      { threshold }
+    );
+    if (ref.current) obs.observe(ref.current);
+    return () => obs.disconnect();
+  }, [threshold]);
+  return [ref, inView];
+};
 import food from "../assets/Images/momo.png";
-import chefAvatar from "../assets/Images/chef_avatar.png";
 import mexicooPizza from "../assets/Images/mexicoo_pizza.png";
 import tomato from "../assets/Images/floating_tomato.png";
 import garlic from "../assets/Images/floating_garlic.png";
 
 const Hero = () => {
+  const [ref, inView] = useInView(0.1);
   const containerRef = useRef(null);
   const imgRef = useRef(null);
   const [slide, setSlide] = useState(0);
@@ -73,7 +88,7 @@ const Hero = () => {
         /* Floating small assets */
         @keyframes floatSm {
           0%,100% { transform: translateY(0) rotate(0deg); }
-          50%      { transform: translateY(-12px) rotate(8deg); }
+          50%      { transform: translateY(-15px) rotate(12deg) scale(1.05); }
         }
         .hero-float-sm { animation: floatSm 4s ease-in-out infinite; }
 
@@ -128,7 +143,7 @@ const Hero = () => {
 
       <section
         id="home"
-        ref={containerRef}
+        ref={ref}
         onMouseMove={handleMouseMove}
         onMouseLeave={resetTilt}
         className="hero-root"
@@ -167,20 +182,27 @@ const Hero = () => {
         <span className="hero-dot-black" style={{top:'42%', right:'30%', width:8, height:8}} />
         <span className="hero-dot-black" style={{top:'20%', right:'42%', width:6, height:6}} />
 
-        {/* ── FLOATING TOMATO ── */}
-        <div className="hero-float-sm" style={{
-          position:'absolute', top:'22%', left:'46%',
-          width:60, zIndex:10, animationDelay:'0.5s',
+        {/* ── FLOATING TOMATO (At background split) ── */}
+        <div className="hero-float-sm hero-tomato" style={{
+          position:'absolute', top:'10%', left:'52%',
+          width:105, zIndex:25, animationDelay:'0.5s',
         }}>
-          <img src={tomato} alt="tomato" style={{width:'100%', filter:'drop-shadow(0 8px 16px rgba(0,0,0,0.25))'}} />
+          <img src={tomato} alt="tomato" style={{
+            width:'100%', mixBlendMode:'multiply', 
+            filter:'drop-shadow(0 12px 24px rgba(0,0,0,0.2))'
+          }} />
         </div>
 
-        {/* ── FLOATING GARLIC ── */}
-        <div className="hero-float-sm" style={{
-          position:'absolute', bottom:'32%', left:'44%',
-          width:48, zIndex:10, animationDelay:'1.2s',
+        {/* ── FLOATING GARLIC (At background split) ── */}
+        <div className="hero-float-sm hero-garlic" style={{
+          position:'absolute', bottom:'25%', left:'48%',
+          width:85, zIndex:25, animationDelay:'1.5s',
+          marginLeft:-42, /* center on split line */
         }}>
-          <img src={garlic} alt="garlic" style={{width:'100%', filter:'drop-shadow(0 6px 12px rgba(0,0,0,0.3))'}} />
+          <img src={garlic} alt="garlic" style={{
+            width:'100%', mixBlendMode:'multiply', 
+            filter:'drop-shadow(0 10px 20px rgba(0,0,0,0.25))'
+          }} />
         </div>
 
         {/* ── MAIN GRID ── */}
@@ -235,9 +257,9 @@ const Hero = () => {
 
             {/* Description */}
             <p style={{
-              fontSize:'14px', lineHeight:1.7,
-              color:'#888', maxWidth:340, margin:0,
-              marginBottom:32,
+              fontSize:'16px', lineHeight:1.8,
+              color:'#666', maxWidth:380, margin:0,
+              marginBottom:40,
             }}>
               Simplify restaurant operations, reduce waste, and empower<br/>
               your team with intelligent automation. Only in <strong style={{color:'#1a1a1a'}}>FNB.</strong>
@@ -259,7 +281,9 @@ const Hero = () => {
                   border:'none',
                   cursor:'pointer',
                   boxShadow:'0 8px 24px rgba(0,0,0,0.25)',
-                  transition:'transform 0.2s, box-shadow 0.2s',
+                  opacity: inView ? 1 : 0,
+                  transform: inView ? 'scale(1) rotate(0deg)' : 'scale(0.9) rotate(2deg)',
+                  transition: 'opacity 1s cubic-bezier(0.4,0,0.2,1) 0.2s, transform 1.2s cubic-bezier(0.4,0,0.2,1) 0.2s, box-shadow 0.2s',
                 }}
                 onMouseEnter={e => { e.currentTarget.style.transform='scale(1.05)'; e.currentTarget.style.boxShadow='0 12px 32px rgba(0,0,0,0.35)'; }}
                 onMouseLeave={e => { e.currentTarget.style.transform='scale(1)'; e.currentTarget.style.boxShadow='0 8px 24px rgba(0,0,0,0.25)'; }}
@@ -299,7 +323,7 @@ const Hero = () => {
                 alt="Smart ERP Food"
                 className="hero-food-img"
                 style={{
-                  width:'min(420px, 90%)',
+                  width:'min(520px, 95%)',
                   objectFit:'contain',
                   position:'relative',
                   zIndex:10,
@@ -329,7 +353,9 @@ const Hero = () => {
           width:'min(340px, 90vw)',
           boxShadow:'0 12px 40px rgba(0,0,0,0.4)',
           border:'1px solid rgba(255,255,255,0.08)',
-          transition:'all 0.3s',
+          opacity: inView ? 1 : 0,
+          transform: inView ? 'translateY(0)' : 'translateY(30px)',
+          transition: 'opacity 0.9s cubic-bezier(0.4,0,0.2,1), transform 0.9s cubic-bezier(0.4,0,0.2,1)',
         }}>
           {/* Card header */}
           <div style={{display:'flex', alignItems:'center', marginBottom:16}}>
@@ -368,9 +394,9 @@ const Hero = () => {
             /* Grid stacks vertically */
             .hero-grid-mobile {
               grid-template-columns: 1fr !important;
-              padding: 100px 24px 220px !important;
-              min-height: unset !important;
-              gap: 32px !important;
+              padding: 40px 16px 40px !important;
+              height: auto !important;
+              min-height: 85vh !important;
             }
 
             /* Food image smaller on tablet */
@@ -378,8 +404,13 @@ const Hero = () => {
               width: min(300px, 80vw) !important;
             }
 
-            /* Floating tomato/garlic hidden on mobile */
-            .hero-float-sm { display: none !important; }
+            /* Floating tomato/garlic visible on mobile but smaller */
+            .hero-float-sm { 
+              display: block !important; 
+              transform: scale(0.65) !important;
+            }
+            .hero-tomato { top: 65% !important; left: 78% !important; }
+            .hero-garlic { bottom: 20% !important; left: 12% !important; }
 
             /* Coupon card — move to bottom center */
             .hero-coupon-card {
