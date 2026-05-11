@@ -161,7 +161,7 @@ const Header = () => {
                 fontSize: 'clamp(16px, 3.5vw, 22px)',
                 color: '#1a1a1a', letterSpacing: '-0.3px',
               }}>
-                Food &amp; Beverage
+                FENBM
               </span>
               <span style={{
                 fontFamily: 'Outfit,sans-serif', fontWeight: 700,

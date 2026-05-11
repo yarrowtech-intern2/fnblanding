@@ -18,12 +18,12 @@ const useInView = (threshold = 0.15) => {
 /* ── FAQ Data ── */
 const faqs = [
   {
-    question: "What is the F&B-ERP Restaurant Management System?",
+    question: "What is the FENBMMS ERP Restaurant Management System?",
     answer:
-      "F&B-ERP is a cloud-native, multi-tenant restaurant management system designed to handle user management, menu and recipe control, order processing, inventory, vendors, finance, analytics, and kitchen operations within a single unified platform.",
+      "FENBMMS ERP is a cloud-native, multi-tenant restaurant management system designed to handle user management, menu and recipe control, order processing, inventory, vendors, finance, analytics, and kitchen operations within a single unified platform.",
   },
   {
-    question: "Who can use the F&B-ERP system?",
+    question: "Who can use the FENBMMS ERP system?",
     answer:
       "The system supports multiple user roles including Restaurant Owner (Admin), Manager, Vendor, and Employees such as chefs, waiters, accountants, and cleaners, each with hierarchical role-based access control.",
   },

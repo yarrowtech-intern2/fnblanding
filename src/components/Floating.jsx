@@ -45,7 +45,7 @@ const FloatingActions = () => {
 
         {/* Email */}
         <a
-          href="mailto:info@fnb-solutions.com"
+          href="mailto:info@fenbmms-solutions.com"
           aria-label="Send Email"
           className="
             w-12 h-12 sm:w-14 sm:h-14

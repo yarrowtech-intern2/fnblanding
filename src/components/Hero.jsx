@@ -230,39 +230,64 @@ const Hero = () => {
               </svg>
             </div>
 
+            {/* Tagline Badge */}
+            <div style={{
+              opacity: inView ? 1 : 0,
+              transform: inView ? 'translateY(0)' : 'translateY(10px)',
+              transition: 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)',
+              marginBottom: 20
+            }}>
+              <span style={{
+                display: 'inline-block',
+                padding: '8px 20px',
+                background: 'rgba(22, 163, 74, 0.1)',
+                border: '1px solid rgba(22, 163, 74, 0.2)',
+                color: '#15803d',
+                borderRadius: '99px',
+                fontSize: '13px',
+                fontWeight: 700,
+                letterSpacing: '0.08em',
+                textTransform: 'uppercase',
+              }}>
+                Smart ERP solution
+              </span>
+            </div>
+
             {/* Heading */}
             <h1 style={{
               fontFamily:'Outfit,sans-serif',
-              fontSize:'clamp(32px, 4.5vw, 58px)',
-              fontWeight:400,
-              lineHeight:1.2,
-              color:'#1a1a1a',
-              margin:0,
-              marginBottom:8,
-            }}>
-              Smart ERP Solution for
-            </h1>
-            <h1 style={{
-              fontFamily:'Outfit,sans-serif',
-              fontSize:'clamp(32px, 4.5vw, 58px)',
+              fontSize:'clamp(42px, 6vw, 76px)',
               fontWeight:900,
-              lineHeight:1.2,
+              lineHeight:1.1,
               color:'#1a1a1a',
               margin:0,
-              marginBottom:20,
+              marginBottom:28,
+              opacity: inView ? 1 : 0,
+              transform: inView ? 'translateY(0)' : 'translateY(20px)',
+              transition: 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.1s',
             }}>
-              Food &amp; Beverage <br/>
-              <span style={{color:'#16a34a'}}>Excellence</span>
+              Streamline your <br/>
+              <span style={{
+                background: 'linear-gradient(135deg, #16a34a 0%, #10b981 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+              }}>Restaurant</span>
             </h1>
 
             {/* Description */}
             <p style={{
-              fontSize:'16px', lineHeight:1.8,
-              color:'#666', maxWidth:380, margin:0,
-              marginBottom:40,
+              fontSize:'clamp(16px, 1.2vw, 19px)', 
+              lineHeight:1.7,
+              color:'#4b5563', 
+              maxWidth:520, 
+              margin:0,
+              marginBottom:48,
+              fontWeight: 400,
+              opacity: inView ? 1 : 0,
+              transform: inView ? 'translateY(0)' : 'translateY(20px)',
+              transition: 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s',
             }}>
-              Simplify restaurant operations, reduce waste, and empower<br/>
-              your team with intelligent automation. Only in <strong style={{color:'#1a1a1a'}}>FNB.</strong>
+              Manage orders, teams, inventory, vendors, billing, and reporting from one connected food and beverage platform.
             </p>
 
             {/* CTA */}

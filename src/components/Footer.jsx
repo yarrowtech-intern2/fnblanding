@@ -56,7 +56,7 @@ const Footer = () => {
           {/* Brand */}
           <div className="text-center md:text-left">
             <h3 className="text-2xl font-extrabold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-green-300">
-              F&B Platform
+              FENBMMS Platform
             </h3>
             <p className="text-gray-400 text-sm leading-relaxed max-w-sm mx-auto md:mx-0">
               Transforming food & beverage operations with intelligent ERP
@@ -96,12 +96,12 @@ const Footer = () => {
               {/* Email */}
               <li>
                 <a
-                  href="mailto:info@fnb-solutions.com"
+                  href="mailto:info@fenbmms-solutions.com"
                   className="group flex items-center justify-center md:justify-start gap-3
                   hover:text-blue-400 transition"
                 >
                   <FaEnvelope className="text-blue-500 text-lg group-hover:scale-110 transition-transform" />
-                  info@fnb-solutions.com
+                  info@fenbmms-solutions.com
                 </a>
               </li>
 
@@ -155,7 +155,7 @@ const Footer = () => {
         {/* Bottom */}
         <div className="flex flex-col gap-4 md:flex-row md:justify-between md:items-center pb-8 text-center md:text-left">
           <p className="text-gray-500 text-sm">
-            © {year} F&B Platform. All rights reserved.
+            © {year} FENBMMS Platform. All rights reserved.
           </p>
 
           {/* Social Icons */}

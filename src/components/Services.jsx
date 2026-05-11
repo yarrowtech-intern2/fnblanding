@@ -33,56 +33,38 @@ const useInView = (threshold = 0.15) => {
 const services = [
   {
     icon: <FaUsers />,
-    title: "Multi-Tenant User Management",
+    title: "Staff Control",
     description:
-      "Role-based access control with tenant-level configurations built for scalability.",
-  },
-  {
-    icon: <FaUtensils />,
-    title: "Dynamic Menu & Recipe Management",
-    description:
-      "Real-time menu updates, ingredient tracking, and cost-optimized recipes.",
+      "Manage departments, permissions, attendance, and shift flow from one dashboard.",
   },
   {
     icon: <FaBoxes />,
-    title: "Intelligent Inventory Control",
+    title: "Inventory Pulse",
     description:
-      "Smart stock tracking, automated restocking alerts, and loss prevention.",
+      "Track stock movement, reduce waste, and respond quickly to kitchen demand.",
+  },
+  {
+    icon: <FaUtensils />,
+    title: "Kitchen Queue",
+    description:
+      "Move orders from service to preparation with cleaner timing and visibility.",
   },
   {
     icon: <FaTruckLoading />,
-    title: "Vendor & Supply Chain Management",
+    title: "Vendor Sync",
     description:
-      "Centralized supplier management with seamless procurement workflows.",
-  },
-  {
-    icon: <FaTasks />,
-    title: "Production Planning & Kitchen Ops",
-    description:
-      "Optimized scheduling and resource allocation for high kitchen efficiency.",
-  },
-  {
-    icon: <FaCheckCircle />,
-    title: "Quality Control & Food Safety",
-    description:
-      "Compliance-ready workflows with automated audits and safety reporting.",
-  },
-  {
-    icon: <FaMoneyBillWave />,
-    title: "Financial Management & Accounting",
-    description:
-      "Expense tracking, invoicing, profit analysis, and accounting automation.",
+      "Coordinate purchase planning, deliveries, and supplier performance in one flow.",
   },
   {
     icon: <FaChartBar />,
-    title: "Business Intelligence & Analytics",
+    title: "Live Analytics",
     description:
-      "Interactive dashboards with actionable insights and growth metrics.",
+      "Turn everyday activity into insights for managers, admins, and owners.",
   },
 ];
 
 /* ─────────────────────────────────────────
-   Single Service Card (Same UI)
+   Single Service Card (Light Aesthetic)
 ───────────────────────────────────────── */
 const ServiceCard = ({ service, index }) => {
   return (
@@ -202,7 +184,7 @@ const Services = () => {
             <div className="inline-flex items-center gap-3 mb-4">
               <span className="block w-8 h-px bg-green-400" />
               <span className="text-green-600 text-xs font-semibold tracking-[0.2em] uppercase">
-                What We Offer
+                SERVICES UNDER
               </span>
               <span className="block w-8 h-px bg-green-400" />
             </div>
@@ -212,9 +194,9 @@ const Services = () => {
               className="font-playfair text-4xl sm:text-5xl lg:text-6xl
               font-extrabold text-gray-900 leading-tight"
             >
-              Our{" "}
+              Built around the real <br className="hidden sm:block" />
               <span className="relative inline-block text-green-600">
-                Services
+                rhythm
                 <svg
                   className="absolute -bottom-2 left-0 w-full"
                   viewBox="0 0 200 8"
@@ -234,22 +216,23 @@ const Services = () => {
                   />
                 </svg>
               </span>
+              {" "} of restaurants
             </h2>
 
             {/* Subtitle */}
             <p
               className="mt-5 text-gray-500 text-base sm:text-lg font-light
-              max-w-xl mx-auto leading-relaxed"
+              max-w-3xl mx-auto leading-relaxed"
             >
-              End-to-end tools designed to modernize every corner of your
-              food &amp; beverage operation.
+              EFNBMMS brings staff, stock, kitchen, vendor, account, and reporting workflows 
+              into a single operating layer so every department sees what matters.
             </p>
           </div>
 
           {/* Cards Grid */}
           <div
             className="grid gap-6 sm:gap-7
-            grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+            grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5"
           >
             {services.map((service, index) => (
               <ServiceCard key={index} service={service} index={index} />

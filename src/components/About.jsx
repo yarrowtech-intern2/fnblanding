@@ -20,31 +20,34 @@ const useInView = (threshold = 0.15) => {
 /* ── Features data ── */
 const features = [
   {
+    number: "01",
     icon: (
       <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8}>
-        <path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18" />
+        <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 7a4 4 0 100-8 4 4 0 000 8zm14 14v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" />
       </svg>
     ),
-    title: "AI-powered Inventory",
-    desc: "Optimize stock levels and reduce waste with intelligent forecasting.",
+    title: "Role Based Modules",
+    desc: "Admins, managers, chefs, waiters, accountants, vendors, and inventory teams each get a focused workspace.",
   },
   {
+    number: "02",
     icon: (
       <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8}>
-        <path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+        <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
       </svg>
     ),
-    title: "Customer Engagement",
-    desc: "Personalized offers and loyalty programs to retain customers.",
+    title: "Live Operational Flow",
+    desc: "Orders, kitchen status, stock movement, payments, and staff activity stay connected across the restaurant.",
   },
   {
+    number: "03",
     icon: (
       <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8}>
-        <path d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        <path d="M18 20V10M12 20V4M6 20v-6" />
       </svg>
     ),
-    title: "Sustainability Driven",
-    desc: "Eco-friendly and cost-efficient operational practices.",
+    title: "Clear Business Visibility",
+    desc: "Dashboards and account history help teams understand daily performance without digging through manual records.",
   },
 ];
 
@@ -70,6 +73,11 @@ const FeatureCard = ({ item, index }) => {
         overflow-hidden cursor-pointer
         [backface-visibility:hidden] [will-change:transform]"
       >
+        {/* Number badge */}
+        <div className="absolute top-4 right-6 text-4xl font-black text-gray-50 opacity-[0.08] group-hover:opacity-[0.15] transition-opacity">
+          {item.number}
+        </div>
+
         {/* Background blob */}
         <div className="absolute -top-8 -right-8 w-28 h-28 rounded-full
           bg-green-50 opacity-0 group-hover:opacity-100
@@ -172,28 +180,28 @@ const About = () => {
             <div className="inline-flex items-center gap-3 mb-4">
               <span className="block w-8 h-px bg-green-400" />
               <span className="text-green-600 text-xs font-semibold tracking-[0.2em] uppercase">
-                Who We Are
+                How It Helps
               </span>
               <span className="block w-8 h-px bg-green-400" />
             </div>
 
-            <h1 className="font-playfair text-4xl sm:text-5xl md:text-6xl
+            <h1 className="font-playfair text-3xl sm:text-4xl md:text-5xl
               font-extrabold text-gray-900 leading-tight">
-              About{" "}
+              Less manual chasing, <br className="hidden sm:block" />
               <span className="relative inline-block text-green-600">
-                Us
+                more controlled service
                 <svg
                   className="absolute -bottom-2 left-0 w-full"
-                  viewBox="0 0 60 8" fill="none"
+                  viewBox="0 0 200 8" fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                   preserveAspectRatio="none"
                 >
                   <path
-                    d="M0 6 Q15 0 30 4 Q45 8 60 2"
+                    d="M0 6 Q50 0 100 4 Q150 8 200 2"
                     stroke="#16a34a" strokeWidth="2.5"
                     strokeLinecap="round" fill="none"
-                    strokeDasharray="80"
-                    strokeDashoffset={headingInView ? "0" : "80"}
+                    strokeDasharray="220"
+                    strokeDashoffset={headingInView ? "0" : "220"}
                     style={{ transition: "stroke-dashoffset 1s ease 0.5s" }}
                   />
                 </svg>
@@ -203,7 +211,7 @@ const About = () => {
         </div>
 
         {/* ══ MAIN CONTENT — Text + Image ══ */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-16
           grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20 items-center"
         >
           {/* Left — Text */}
@@ -212,23 +220,21 @@ const About = () => {
             className="space-y-7 text-center md:text-left"
             style={fadeIn(textInView, "right")}
           >
-            <h2 className="font-playfair text-3xl sm:text-4xl md:text-5xl
+            <h2 className="font-playfair text-3xl sm:text-4xl
               font-extrabold text-gray-900 leading-tight"
             >
-              Empowering the Future of
-              <br />
+              The connected <br />
               <span className="text-transparent bg-clip-text
                 bg-gradient-to-r from-green-600 to-green-400">
-                Food &amp; Beverage
+                food ecosystem
               </span>
             </h2>
 
             <p className="text-gray-500 text-base sm:text-lg font-light
               max-w-xl mx-auto md:mx-0 leading-relaxed"
             >
-              We build smart technology solutions for restaurants, cafés,
-              cloud kitchens, and food businesses to manage operations
-              effortlessly — from kitchen to customer.
+              The landing page now explains the product the way a restaurant owner thinks about it: 
+              people, orders, inventory, payments, and the decisions that connect them.
             </p>
 
             {/* Divider */}
@@ -273,7 +279,7 @@ const About = () => {
 
             <img
               src={aboutImage}
-              alt="About F&B Platform"
+              alt="About FENBMMS Platform"
               className="relative rounded-3xl shadow-2xl w-full object-cover
                 max-h-[380px] sm:max-h-[430px]
                 hover:shadow-[0_24px_60px_rgba(22,101,52,0.2)]
